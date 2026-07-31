@@ -2,7 +2,7 @@
 
 ### Every formula we use, explained like you've never seen math notation before
 
-This is the image-generation companion to `aarambh-ai-math-formulas-guide.md`.
+This is the image-generation companion to `aarambh-studio-math-formulas-guide.md`.
 It's for someone from a **non-math background** — every formula below is
 broken down piece-by-piece before we ever touch a real number.
 
@@ -17,7 +17,7 @@ For every formula, you'll get:
 
 ## How to Read Any Formula (read this first!)
 
-Here's the decoder ring, extended from the `aarambh-ai` guide with a few
+Here's the decoder ring, extended from the `aarambh-studio` guide with a few
 symbols specific to images:
 
 | Symbol | Say it as | Meaning |
@@ -103,7 +103,7 @@ things" measurement.
 **Definition:** Patchify cuts an image's latent grid into small square
 patches and flattens each patch into one long list of numbers — a
 "token" the MMDiT transformer can process, exactly the way a word
-becomes a token in `aarambh-ai`.
+becomes a token in `aarambh-studio`.
 
 **How to read it:**
 ```
@@ -117,7 +117,7 @@ each patch's token length = p × p × C
 **Why we use it:** A transformer (Phase 5's MMDiT blocks) works on
 sequences of tokens, not 2D grids directly — patchify is the bridge that
 turns a picture into something structurally identical to a sentence of
-tokens, which is exactly why the same attention machinery `aarambh-ai`
+tokens, which is exactly why the same attention machinery `aarambh-studio`
 uses for words works for image patches too.
 
 **Example 1 (a small 4×4 latent, patch size 2×2):**
@@ -478,7 +478,7 @@ influence only as it learns something useful to contribute.
 
 **Definition:** The mechanism that lets image patch tokens "look at" text
 tokens (and vice versa) and decide which ones are most relevant right
-now — the same core idea as `aarambh-ai`'s self-attention, applied here
+now — the same core idea as `aarambh-studio`'s self-attention, applied here
 between two DIFFERENT sequences (image patches and text tokens) instead
 of one sequence looking at itself.
 
@@ -826,7 +826,7 @@ which specific samples did relatively better or worse.
 
 **Q: Do I need to understand every formula here before working on the
 project?**
-No — same answer as the `aarambh-ai` guide. Understanding #1 (dot
+No — same answer as the `aarambh-studio` guide. Understanding #1 (dot
 product), #5 (rectified flow), and #9 (cross-attention) covers the
 conceptual core of how the model actually draws a picture from a prompt;
 the rest are specific tools used by specific phases, best learned when

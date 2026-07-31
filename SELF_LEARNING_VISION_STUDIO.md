@@ -174,7 +174,7 @@ gating check and the actually-committed weights before the next request
 relies on them. The regression suite itself grows by one entry every time
 a new subject/style is committed, so the bar for future updates gets
 stricter, not looser, as the memory bank grows — mirroring exactly how
-`aarambh-ai`'s forgetting diagnostics and Manas's own anti-forgetting
+`aarambh-studio`'s forgetting diagnostics and Manas's own anti-forgetting
 verification are designed to behave over time.
 
 ---

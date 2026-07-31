@@ -242,7 +242,7 @@ images, audio, and more) of AI that creates new content rather than
 just classifying or analyzing existing content.
 
 **Beginner explanation:**
-`aarambh-ai` is generative AI for text; `aarambh-voice-studio` is
+`aarambh-studio` is generative AI for text; `aarambh-voice-studio` is
 generative AI for audio; `aarambh-vision-studio` is generative AI for
 images. All three share a common underlying idea — learn the statistical
 patterns in a huge pile of examples, then sample new examples from that

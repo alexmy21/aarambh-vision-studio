@@ -260,7 +260,7 @@ lower precision, so it runs faster and takes up less memory, with as
 little quality loss as possible.
 
 **Beginner explanation:**
-Same idea as `aarambh-ai`'s quantization phase — trained numbers are
+Same idea as `aarambh-studio`'s quantization phase — trained numbers are
 normally stored with a lot of precision (many decimal places). Rounding
 them to a coarser scale makes the model smaller and faster to run, at
 the cost of a small, carefully-measured amount of quality.
@@ -644,7 +644,7 @@ documentation is completed, and the project is officially tagged as its
 first full release.
 
 **Beginner explanation:**
-Same idea as `aarambh-ai`'s own release phases: write the README, make
+Same idea as `aarambh-studio`'s own release phases: write the README, make
 sure the documentation still matches what was actually built (things
 often shift slightly during a long build), and tag the finished result
 so it's clearly marked as "this is the real v1.0.0."

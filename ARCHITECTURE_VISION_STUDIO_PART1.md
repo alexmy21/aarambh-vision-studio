@@ -16,7 +16,7 @@
   distillation, kernels, quantisation, fine-tuning, alignment (GRPO/DPO),
   safety, eval + named external baselines, crate reference, data flow,
   memory estimates, hardware strategy, image output formats, relationship
-  to `aarambh-ai` / `aarambh-voice-studio`, out-of-scope.
+  to `aarambh-studio` / `aarambh-voice-studio`, out-of-scope.
 - `SELF_LEARNING_VISION_STUDIO.md` — the self-learning subsystem in full.
 - `ROADMAP_VISION_STUDIO_PART1.md` / `PART2.md` — 27-phase step-by-step
   build plan, same Goal/Tasks/Tests/Milestone depth as `ROADMAP_V4.md`.
@@ -51,7 +51,7 @@ scratch — no bindings to PyTorch, no vendored checkpoints.
 | # | Gap raised | Fix, in one line | Where |
 |---|---|---|---|
 | 1 | VAE fallback path missing | Staged de-risking: reconstruction-only Stage 0a before adversarial/KL are added, with explicit go/no-go thresholds | §6.5 |
-| 2 | Text encoder bootstrap underspecified | Reuse `aarambh-ai`'s **decoder-only** checkpoint directly (not a new bidirectional variant), extract hidden states from an intermediate layer, not the final one | §7 |
+| 2 | Text encoder bootstrap underspecified | Reuse `aarambh-studio`'s **decoder-only** checkpoint directly (not a new bidirectional variant), extract hidden states from an intermediate layer, not the final one | §7 |
 | 3 | Phase 4 fine-tuning unclear | Explicit freeze/unfreeze schedule, step counts, and curriculum order | §9.5 |
 | 4 | Editing dataset source unclear | Self-bootstrapped synthetic pairs via prompt-to-prompt cross-attention injection on your own Phase 10 checkpoint, not a dependency on an external editing dataset | Part 2, §10.3 |
 | 5 | Distillation too vague | Named recipe: reflow + adversarial correction (the same fix published work uses to solve one-step blur and few-step oversaturation) | Part 2, §12 |
@@ -74,7 +74,7 @@ scratch — no bindings to PyTorch, no vendored checkpoints.
   editing, on the same MMDiT backbone via in-context reference-image
   conditioning.
 - **Image Understanding** — a CLIP-style contrastive encoder plus a
-  captioning head, bootstrapped from `aarambh-ai`'s frozen CLIP-B/32.
+  captioning head, bootstrapped from `aarambh-studio`'s frozen CLIP-B/32.
 - **Upscale / Refinement** — an optional super-resolution pass.
 - **Few-Step Distillation** — a named, concrete recipe (Part 2 §12), not
   a placeholder.
@@ -87,7 +87,7 @@ scratch — no bindings to PyTorch, no vendored checkpoints.
 
 | Old paradigm (SD 1.5/2.1) | Current paradigm (SD3/FLUX/Qwen-Image/Sana/HiDream) | Why it matters here |
 |---|---|---|
-| Convolutional U-Net | Transformer backbone on patch tokens (DiT/MMDiT) | Reuses your `aarambh-ai` attention/transformer-block code |
+| Convolutional U-Net | Transformer backbone on patch tokens (DiT/MMDiT) | Reuses your `aarambh-studio` attention/transformer-block code |
 | Discrete-step DDPM, ~1000 steps | Continuous-time rectified flow, straight-line paths, few sampling steps | Simpler loss, simpler sampler, clean distillation path |
 | CLIP-only conditioning | Large text encoder, deep token-level interaction | Your own decoder-only transformer is a legitimate text encoder (§7) |
 | Editing = separate model | Editing = same backbone, in-context reference tokens | One model, one training loop |
@@ -126,7 +126,7 @@ scratch — no bindings to PyTorch, no vendored checkpoints.
 
 | Goal | Decision |
 |---|---|
-| Reuse, don't rebuild | Transformer block ported from `aarambh-ai`; text encoder is `aarambh-ai`'s checkpoint used **as-is** (§7), not reimplemented in a new configuration |
+| Reuse, don't rebuild | Transformer block ported from `aarambh-studio`; text encoder is `aarambh-studio`'s checkpoint used **as-is** (§7), not reimplemented in a new configuration |
 | Understanding before generation | The captioning/CLIP-style encoder (§9) trains before the generator |
 | One model, not a pipeline | Generation, editing, structural conditioning, and reference-prompting share one MMDiT backbone |
 | Latest architecture, not legacy | MMDiT + rectified flow from day one |
@@ -180,7 +180,7 @@ axum                = "0.8"
 > **VAE:** implemented from scratch in `aarambh-vision-tokenizer` — a
 > continuous latent autoencoder (KL-regularised, not VQ). See §6.
 >
-> **Text encoder:** no new crate-level dependency — it is `aarambh-ai`'s
+> **Text encoder:** no new crate-level dependency — it is `aarambh-studio`'s
 > own decoder-only checkpoint, loaded via the existing weights format.
 > See §7.
 >
@@ -203,7 +203,7 @@ aarambh-vision-studio/
 │   ├── aarambh-vision-understand/      # L1 — CLIP-style contrastive encoder + captioner
 │   ├── aarambh-vision-nn/              # L2 — MMDiT block, AdaLN-Zero, 2D-RoPE (bucket-aware)
 │   ├── aarambh-vision-kernel/          # L2 — CPU SIMD kernels, CUDA prep, fused patchify
-│   ├── aarambh-vision-textencoder/     # L3 — thin wrapper loading aarambh-ai's decoder-only checkpoint
+│   ├── aarambh-vision-textencoder/     # L3 — thin wrapper loading aarambh-studio's decoder-only checkpoint
 │   ├── aarambh-vision-model/           # L3 — full MMDiT assembly (gen + edit + structure + refprompt heads)
 │   ├── aarambh-vision-weights/         # L3 — SafeTensors save/load, checkpoint conversion
 │   ├── aarambh-vision-train/           # L4 — pretraining loops, rectified flow objective, distillation
@@ -379,7 +379,7 @@ toward **decoder-only LLM text encoders** used directly — Lumina-Next
 uses Gemma-2B, SeFi-Image uses Qwen3-VL, and multiple published
 comparisons find decoder-only LLMs match or beat T5/CLIP on
 compositional prompt understanding. That means the better move — and
-the one that costs less work — is to **reuse `aarambh-ai`'s existing
+the one that costs less work — is to **reuse `aarambh-studio`'s existing
 decoder-only checkpoint exactly as it already is**, not build a new
 bidirectional variant.
 
@@ -389,10 +389,10 @@ bidirectional variant.
 prompt text
    │
    ▼
-BPE tokenizer (aarambh-ai's existing trained tokenizer — reused directly)
+BPE tokenizer (aarambh-studio's existing trained tokenizer — reused directly)
    │
    ▼
-aarambh-ai's decoder-only transformer, loaded via aarambh-vision-textencoder
+aarambh-studio's decoder-only transformer, loaded via aarambh-vision-textencoder
 (causal masking, exactly as trained — no architecture change)
    │
    ├── hidden states from an intermediate layer (not the final layer —
@@ -413,7 +413,7 @@ one-time experiment, not a guess.
 
 ### 7.3 Why this is reuse, not new training
 
-Because `aarambh-ai`'s checkpoint is used **as-is** — frozen at first,
+Because `aarambh-studio`'s checkpoint is used **as-is** — frozen at first,
 with the option to unfreeze and fine-tune end-to-end once the MMDiT
 baseline (Phase 7) is stable — this component needs **no dedicated
 pretraining phase** in the roadmap at all. This is "reuse, don't rebuild"
@@ -423,7 +423,7 @@ encoder," but "load the exact checkpoint that already exists."
 ### 7.4 Data
 
 No text-only data is consumed directly by this project — that
-pretraining already happened as part of `aarambh-ai`. This component
+pretraining already happened as part of `aarambh-studio`. This component
 only ever sees the (image, caption) pairs that Phase 3/4's pipeline
 produces.
 
@@ -522,7 +522,7 @@ patch-grid shape, but 2D-RoPE is computed from the row/column coordinate
 of each patch, not from a fixed sequence length — so no architecture
 change is needed per bucket. For grid sizes larger than anything seen at
 Tiny-scale training time, the same NTK-style RoPE frequency rescaling
-`aarambh-ai` already uses for long-context extrapolation (v2 phase,
+`aarambh-studio` already uses for long-context extrapolation (v2 phase,
 YaRN/NTK) is reused here, extended to two dimensions — this is a direct,
 concrete port of existing work, not a new mechanism.
 
@@ -542,7 +542,7 @@ image
    │
    ▼
 Vision transformer encoder (patch-based, ViT-style, bootstrapped from
-aarambh-ai's frozen CLIP-B/32)
+aarambh-studio's frozen CLIP-B/32)
    │
    ├── Contrastive projection head → image embedding (CLIP-style dual encoder)
    │
@@ -575,7 +575,7 @@ The first draft said "fine-tuned further" without specifying what stays
 frozen, for how long, or in what order. Concretely:
 
 ```
-Step 1 — Load aarambh-ai's frozen CLIP-B/32 weights into the vision
+Step 1 — Load aarambh-studio's frozen CLIP-B/32 weights into the vision
          encoder. Everything frozen except the two new projection heads
          (contrastive text-projection, captioning decoder) — these are
          randomly initialised and trained first, for a fixed number of
@@ -588,7 +588,7 @@ Step 2 — Unfreeze the top N transformer blocks of the vision encoder
          reduced learning rate for a second fixed number of steps.
          Rationale: lets the encoder adapt slightly to this project's
          specific image distribution without catastrophically forgetting
-         what CLIP-B/32 already learned in aarambh-ai.
+         what CLIP-B/32 already learned in aarambh-studio.
 
 Step 3 — Enable the captioning loss (λ_cap turned on) on top of Step 2's
          checkpoint, train jointly for a third fixed number of steps.

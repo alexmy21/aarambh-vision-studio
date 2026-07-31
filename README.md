@@ -2,7 +2,7 @@
 
 **A from-scratch image generation, editing, and understanding system, written entirely in Rust.**
 
-Built on [`candle`](https://github.com/huggingface/candle), with no bindings to PyTorch and no vendored checkpoints. A sibling project to [`aarambh-ai`](https://github.com/AarambhDevHub/aarambh-ai) (a from-scratch LLM) and [`aarambh-voice-studio`](https://github.com/AarambhDevHub/aarambh-voice-studio) (a from-scratch audio studio) — same philosophy, applied to images.
+Built on [`candle`](https://github.com/huggingface/candle), with no bindings to PyTorch and no vendored checkpoints. A sibling project to [`aarambh-studio`](https://github.com/AarambhDevHub/aarambh-studio) (a from-scratch LLM) and [`aarambh-voice-studio`](https://github.com/AarambhDevHub/aarambh-voice-studio) (a from-scratch audio studio) — same philosophy, applied to images.
 
 [![Rust](https://img.shields.io/badge/rust-stable-orange.svg)](https://www.rust-lang.org)
 [![Status](https://img.shields.io/badge/status-pre--implementation-yellow.svg)](./ROADMAP_VISION_STUDIO_PART1.md)
@@ -147,7 +147,7 @@ report it responsibly.
 `aarambh-vision-studio` is part of the [Aarambh Dev Hub](https://github.com/AarambhDevHub)
 family of from-scratch Rust AI projects:
 
-- [`aarambh-ai`](https://github.com/AarambhDevHub/aarambh-ai) — from-scratch LLM
+- [`aarambh-studio`](https://github.com/AarambhDevHub/aarambh-studio) — from-scratch LLM
 - [`aarambh-voice-studio`](https://github.com/AarambhDevHub/aarambh-voice-studio) — from-scratch audio AI studio
 - `aarambh-vision-studio` — from-scratch image generation, editing & understanding (this project)
 

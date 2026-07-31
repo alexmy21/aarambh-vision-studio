@@ -14,7 +14,7 @@
 //! | `Understand` | manual | contrastive encoder or captioner forward failure |
 //! | `Nn` | manual | MMDiT block, AdaLN-Zero, or 2D-RoPE failure |
 //! | `Kernel` | manual | CPU SIMD or fused patchify kernel failure |
-//! | `TextEncoder` | manual | loading or running aarambh-ai's text encoder |
+//! | `TextEncoder` | manual | loading or running aarambh-studio's text encoder |
 //! | `Model` | manual | full MMDiT assembly forward failure |
 //! | `Weights` | manual | SafeTensors save / load failure |
 //! | `Train` | manual | training loop (optimiser, checkpointing) failure |
@@ -74,7 +74,7 @@ pub enum AarambhVisionError {
     #[error("Kernel error: {0}")]
     Kernel(String),
 
-    /// `aarambh-vision-textencoder` — loading or running aarambh-ai's checkpoint.
+    /// `aarambh-vision-textencoder` — loading or running aarambh-studio's checkpoint.
     #[error("Text encoder error: {0}")]
     TextEncoder(String),
 

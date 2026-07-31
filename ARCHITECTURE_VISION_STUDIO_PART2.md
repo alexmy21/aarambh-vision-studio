@@ -23,7 +23,7 @@
 26. [Memory & Compute Estimates](#26-memory--compute-estimates)
 27. [Hardware Strategy](#27-hardware-strategy)
 28. [Image Output Formats](#28-image-output-formats)
-29. [Relationship to `aarambh-ai` and `aarambh-voice-studio`](#29-relationship-to-aarambh-ai-and-aarambh-voice-studio)
+29. [Relationship to `aarambh-studio` and `aarambh-voice-studio`](#29-relationship-to-aarambh-studio-and-aarambh-voice-studio)
 30. [What's Explicitly Out of Scope (v1)](#30-whats-explicitly-out-of-scope-v1)
 
 ---
@@ -347,7 +347,7 @@ same "separate, controllable stages" philosophy as `aarambh-voice-studio`.
 ## 16. Custom Kernels (`aarambh-vision-kernel`)
 
 CPU SIMD kernels first-class, CUDA feature-gated, exercised once free
-Kaggle GPU time is available — same strategy as `aarambh-ai` and
+Kaggle GPU time is available — same strategy as `aarambh-studio` and
 `aarambh-voice-studio`:
 
 - **Fused patchify/unpatchify**
@@ -488,7 +488,7 @@ pub struct DrishtiRequest {
 | `aarambh-vision-understand` | L1 | CLIP-style encoder + captioner |
 | `aarambh-vision-nn` | L2 | MMDiT block, AdaLN-Zero, 2D-RoPE (bucket-aware) |
 | `aarambh-vision-kernel` | L2 | CPU SIMD, CUDA prep, fused ops |
-| `aarambh-vision-textencoder` | L3 | Thin loader for `aarambh-ai`'s decoder-only checkpoint |
+| `aarambh-vision-textencoder` | L3 | Thin loader for `aarambh-studio`'s decoder-only checkpoint |
 | `aarambh-vision-model` | L3 | Full MMDiT assembly — gen + edit + structure + refprompt heads |
 | `aarambh-vision-weights` | L3 | SafeTensors save/load, checkpoint conversion |
 | `aarambh-vision-train` | L4 | Pretraining loops, rectified flow, distillation (§14) |
@@ -564,9 +564,9 @@ impractical on CPU.
 
 ---
 
-## 29. Relationship to `aarambh-ai` and `aarambh-voice-studio`
+## 29. Relationship to `aarambh-studio` and `aarambh-voice-studio`
 
-| Shared with `aarambh-ai` | Shared with `aarambh-voice-studio` | New in this project |
+| Shared with `aarambh-studio` | Shared with `aarambh-voice-studio` | New in this project |
 |---|---|---|
 | Transformer block primitives | "Trained once, frozen thereafter" tokenizer discipline | MMDiT (dual/single-stream, AdaLN-Zero, 2D-RoPE) |
 | Frozen CLIP-B/32, reused as bootstrap (Part 1 §9) | "Understanding before generation" ordering | Rectified flow matching + ODE sampling |

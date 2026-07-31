@@ -8,7 +8,7 @@ and understanding system built in Rust using Candle. It covers the
 planned **v1.0.0** roadmap, Phases 0 through 27. Think of this as a
 story: each phase builds on top of the one before it, like constructing
 a building floor by floor — exactly the same idea as the
-`aarambh-ai-complete-guide.md` you already have, just for images instead
+`aarambh-studio-complete-guide.md` you already have, just for images instead
 of text.
 
 No prior AI knowledge assumed. Every section has:
@@ -71,7 +71,7 @@ phase below fits:
 Everything else — editing, reference-image prompting, structural
 conditioning, quantization, LoRA, alignment, self-learning — are
 **upgrades** bolted onto this core pipeline, exactly the same philosophy
-as `aarambh-ai`. Keep this diagram in your head as we go.
+as `aarambh-studio`. Keep this diagram in your head as we go.
 
 ---
 
@@ -120,7 +120,7 @@ After Phase 0:
 - *Q: Why so many separate crates instead of one big file?* → Each crate
   compiles somewhat independently and has one clear job, so a bug in the
   safety filter can't accidentally break the VAE — the same reason
-  `aarambh-ai` has many small crates instead of one giant one.
+  `aarambh-studio` has many small crates instead of one giant one.
 - *Q: What's actually "real" after Phase 0?* → Only the shared config and
   request types. Everything else is an empty shell waiting to be filled.
 
@@ -134,7 +134,7 @@ that squeezes a big picture down into a small grid of numbers (a
 a full picture.
 
 **Beginner explanation:**
-`aarambh-ai` has a tokenizer that turns words into numbers. The Image VAE
+`aarambh-studio` has a tokenizer that turns words into numbers. The Image VAE
 is the picture equivalent — instead of turning "playing chess" into
 `[1045, 2075, 8899]`, it turns a 512×512 photo into a much smaller grid
 of numbers that still captures everything important about the photo.
@@ -147,7 +147,7 @@ compressed latent has a tiny fraction of that.
 Without this compression step, every later phase (the MMDiT backbone,
 training, editing) would have to work directly on full-resolution pixels
 — far too slow and memory-hungry on the free-tier hardware this whole
-project is built for. This is also, like `aarambh-ai`'s tokenizer, the
+project is built for. This is also, like `aarambh-studio`'s tokenizer, the
 **one component trained first and then frozen forever** — every phase
 after this treats it as a fixed, trustworthy tool.
 
@@ -207,7 +207,7 @@ Output: the cat photo again, reconstructed almost perfectly
 by a language model — cleaning it up and converting it into numbers.
 
 **Beginner explanation:**
-This reuses `aarambh-ai`'s own tokenizer directly, rather than building
+This reuses `aarambh-studio`'s own tokenizer directly, rather than building
 a new one — the exact same "words into numbers" translator you already
 have. This phase's job is just to wire that existing translator into
 this project and handle small details, like what "nothing" (an empty
@@ -215,14 +215,14 @@ prompt) should look like as numbers.
 
 **Why we need it:**
 Every prompt you type has to become numbers before any neural network
-can touch it — same reason as `aarambh-ai`'s Phase 1, just reused rather
+can touch it — same reason as `aarambh-studio`'s Phase 1, just reused rather
 than rebuilt.
 
 **Example:**
 ```
 Your prompt: "a red apple on a wooden table"
                     │
-                    ▼  aarambh-ai's existing tokenizer
+                    ▼  aarambh-studio's existing tokenizer
 Tokens: [512, 8831, 219, 4471, 90, 3350, 1122]
 ```
 
@@ -231,7 +231,7 @@ Tokens: [512, 8831, 219, 4471, 90, 3350, 1122]
   "a red apple on a wooden table"
               │
               ▼
-     (aarambh-ai's tokenizer — reused, not rebuilt)
+     (aarambh-studio's tokenizer — reused, not rebuilt)
               │
               ▼
   [512, 8831, 219, 4471, 90, 3350, 1122]
@@ -239,7 +239,7 @@ Tokens: [512, 8831, 219, 4471, 90, 3350, 1122]
 
 **Common beginner questions:**
 - *Q: Why not build a brand-new tokenizer for images?* → Because the
-  tokenizer's job is entirely about text, and `aarambh-ai` already solved
+  tokenizer's job is entirely about text, and `aarambh-studio` already solved
   that problem well — rebuilding it would be pure duplicated effort.
 - *Q: What's a "null" or "empty" prompt for?* → It's used later
   (Phase 8) so the model can learn what "no instruction at all" looks
@@ -255,7 +255,7 @@ their captions, resizes them consistently, and groups them into
 efficient batches for training.
 
 **Beginner explanation:**
-Same factory-conveyor-belt idea as `aarambh-ai`'s data pipeline, but for
+Same factory-conveyor-belt idea as `aarambh-studio`'s data pipeline, but for
 pictures instead of text. One extra wrinkle specific to images:
 photos come in all sorts of shapes (a phone photo is tall, a landscape
 photo is wide, a profile picture is square). "Resolution bucketing" is
@@ -265,7 +265,7 @@ every image into an ugly, stretched square.
 
 **Why we need it:**
 Without organized batches, training either crawls or crashes — same
-reason as `aarambh-ai`. The bucketing part specifically exists because
+reason as `aarambh-studio`. The bucketing part specifically exists because
 real-world images aren't all one shape, and this project wants to
 generate wide photos, tall photos, and square photos equally well.
 
@@ -319,7 +319,7 @@ actual one-sentence caption describing it.
 Before this project teaches a model to *draw* pictures, it teaches a
 model to *understand* pictures — the same "understanding before
 generation" idea used in the audio sibling project. This component is
-bootstrapped from a vision component `aarambh-ai` already has (rather
+bootstrapped from a vision component `aarambh-studio` already has (rather
 than starting from nothing), then taught two skills: first, matching
 pictures to the right caption out of many candidates (like a matching
 game); second, writing its own caption for a picture with no caption at
@@ -349,7 +349,7 @@ Captioning skill: given ONLY the photo, writes its own caption:
           │
           ▼
  ┌─────────────────┐
- │  vision encoder  │  (bootstrapped from aarambh-ai's existing component)
+ │  vision encoder  │  (bootstrapped from aarambh-studio's existing component)
  └────────┬─────────┘
           │
     ┌─────┴──────┐
@@ -379,7 +379,7 @@ drawing brain (Phase 8) will be assembled from — the specific kind of
 transformer block used by modern image models, called MMDiT.
 
 **Beginner explanation:**
-`aarambh-ai` already has transformer building blocks (used for
+`aarambh-studio` already has transformer building blocks (used for
 understanding and generating text). This phase adapts that same idea for
 pictures, with two picture-specific additions: (1) a way for the model
 to know WHERE a piece of the picture sits (top-left corner? dead
@@ -426,7 +426,7 @@ even if patches get reordered inside the math, the position travels with them.
 
 **Common beginner questions:**
 - *Q: Is this a totally new invention?* → No — it directly reuses
-  `aarambh-ai`'s attention-block ideas, just with the extra 2D-position
+  `aarambh-studio`'s attention-block ideas, just with the extra 2D-position
   and timestep-steering pieces added on top for pictures specifically.
 - *Q: What's a "timestep" and why does it steer the network?* → Explained
   fully in Phase 8, where the training process is described — for now,
@@ -484,13 +484,13 @@ SIMD way:  calculate 4 or 8 patches' position-math AT THE SAME TIME,
 
 ## Phase 7: Text Encoder Integration
 
-**Definition:** This phase connects `aarambh-ai`'s existing language
+**Definition:** This phase connects `aarambh-studio`'s existing language
 model directly into this project, so it can read prompts and describe
 what it understood in a way the MMDiT backbone (Phase 5/8) can use.
 
 **Beginner explanation:**
 Rather than building a brand-new "prompt understanding" component, this
-phase loads `aarambh-ai`'s already-trained brain exactly as-is and takes
+phase loads `aarambh-studio`'s already-trained brain exactly as-is and takes
 a peek at what's happening partway through it — not its very final
 output, but a snapshot from partway through its thinking — because that
 snapshot turns out to carry richer information about the prompt's
@@ -507,7 +507,7 @@ much smaller, simpler text component.
 ```
 Prompt: "a red cube behind a blue sphere"
               │
-              ▼  aarambh-ai's existing brain (loaded, not retrained)
+              ▼  aarambh-studio's existing brain (loaded, not retrained)
         [thinking... layer 1, layer 2, ... layer 16 (snapshot taken HERE), ...final layer]
               │
               ▼
@@ -519,7 +519,7 @@ Prompt: "a red cube behind a blue sphere"
   prompt
     │
     ▼
-  aarambh-ai's brain, layer by layer
+  aarambh-studio's brain, layer by layer
     │
     ├── layer 8
     ├── layer 16  ← snapshot taken here (chosen by a small experiment)
@@ -691,7 +691,7 @@ Same prompt, different requested shapes:
   itself per shape.
 - *Q: What if someone asks for an even bigger picture than anything
   trained on?* → A math trick (borrowed directly from a similar
-  "handling longer text than trained on" trick in `aarambh-ai`) lets the
+  "handling longer text than trained on" trick in `aarambh-studio`) lets the
   position-awareness stretch to somewhat larger grids than it directly
   saw in training.
 
@@ -710,7 +710,7 @@ phase repeats the same training recipe at larger sizes ("Small," then
 
 **Why we need it:**
 A bigger model generally produces sharper, more prompt-accurate images —
-the same "prove it small first, then scale up" philosophy `aarambh-ai`
+the same "prove it small first, then scale up" philosophy `aarambh-studio`
 uses for its own model sizes.
 
 **Example:**

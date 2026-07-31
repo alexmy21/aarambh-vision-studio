@@ -79,7 +79,7 @@ features (Phases 12 and 15) were missing entirely and several phases
    instead of an unspecified "fine-tune further."
 3. **5–7** — MMDiT-specific primitives, then kernels, then the text
    encoder — deliberately split out as its own small phase now, because
-   "load `aarambh-ai`'s checkpoint and sweep 2–3 candidate hidden layers"
+   "load `aarambh-studio`'s checkpoint and sweep 2–3 candidate hidden layers"
    is a discrete, testable unit of work in its own right, not a detail
    buried inside Phase 8.
 4. **8–9** — baseline generation, then sampler + CLI. Unchanged in
@@ -350,7 +350,7 @@ recognisably. The phase's milestone notes explicitly record which stage
 **Duration:** 3–5 days | **Hardware:** i3
 
 ### Goal
-Prompt text reliably becomes the token IDs `aarambh-ai`'s decoder-only
+Prompt text reliably becomes the token IDs `aarambh-studio`'s decoder-only
 checkpoint expects (Phase 7 loads the checkpoint itself; this phase only
 prepares text going into it).
 
@@ -358,7 +358,7 @@ prepares text going into it).
 
 **`aarambh-vision-textprep`:**
 ```
-[ ] src/tokenize.rs — wraps tokenizers crate, loads aarambh-ai's EXISTING
+[ ] src/tokenize.rs — wraps tokenizers crate, loads aarambh-studio's EXISTING
     trained BPE vocabulary directly (no new tokenizer training)
 [ ] src/normalize.rs — casing, whitespace, basic prompt-syntax handling
 [ ] src/null_condition.rs — fixed, reproducible null/empty token sequence
@@ -454,7 +454,7 @@ Part 1 §9.5 — not a single unspecified "fine-tune further" instruction.
 
 **Step 1 (fixed step budget A) — heads only:**
 ```
-[ ] Load aarambh-ai's frozen CLIP-B/32 weights into vision_encoder
+[ ] Load aarambh-studio's frozen CLIP-B/32 weights into vision_encoder
 [ ] Freeze the entire vision encoder
 [ ] Train ONLY text_projection + caption_decoder (randomly initialised)
     against the frozen encoder
@@ -469,7 +469,7 @@ Part 1 §9.5 — not a single unspecified "fine-tune further" instruction.
     depth and adjust based on Step 2's own validation curve)
 [ ] Continue contrastive-only training at a reduced learning rate
 [ ] Rationale: lets the encoder adapt to this project's image
-    distribution without catastrophically forgetting aarambh-ai's CLIP-B/32
+    distribution without catastrophically forgetting aarambh-studio's CLIP-B/32
 ```
 
 **Step 3 (fixed step budget C) — enable captioning:**
@@ -517,7 +517,7 @@ the chosen N for Step 2. Tag: `v0.1.0-phase4`
 
 ### Goal
 The MMDiT block, unit-tested in isolation, including the bucket-aware
-2D-RoPE and NTK-style extrapolation reused from `aarambh-ai`'s long-
+2D-RoPE and NTK-style extrapolation reused from `aarambh-studio`'s long-
 context work (§8.5, ARCHITECTURE Part 1).
 
 ### Tasks
@@ -527,7 +527,7 @@ context work (§8.5, ARCHITECTURE Part 1).
 [ ] src/patchify.rs — shared patch-token framing with the tokenizer
 [ ] src/rope2d.rs — 2D rotary embeddings over row/column coordinates
 [ ] src/rope2d_ntk.rs — NTK-style frequency rescaling for grid sizes
-    beyond Tiny-scale training range, ported from aarambh-ai's YaRN/NTK
+    beyond Tiny-scale training range, ported from aarambh-studio's YaRN/NTK
     long-context extrapolation, extended to two dimensions
 [ ] src/adaln_zero.rs — conditioning MLP → scale/shift/gate, zero-init gates
 [ ] src/dual_stream.rs — separate image/text MLP, joint attention
@@ -606,7 +606,7 @@ naive path on i3 CPU. Tag: `v0.1.0-phase6`
 **Duration:** 4–6 days | **Hardware:** i3 + Kaggle | *(new, split out from Phase 8)*
 
 ### Goal
-`aarambh-ai`'s decoder-only checkpoint loaded and wired as the text
+`aarambh-studio`'s decoder-only checkpoint loaded and wired as the text
 encoder, with the intermediate hidden-layer choice settled by a small,
 real experiment rather than a guess (§7.2, ARCHITECTURE Part 1).
 
@@ -614,7 +614,7 @@ real experiment rather than a guess (§7.2, ARCHITECTURE Part 1).
 
 **`aarambh-vision-textencoder`:**
 ```
-[ ] src/load.rs — load aarambh-ai's existing decoder-only checkpoint via
+[ ] src/load.rs — load aarambh-studio's existing decoder-only checkpoint via
     the shared weights format, no architecture changes
 [ ] src/hidden_states.rs — expose per-token hidden states at a
     configurable hidden_layer_index, plus mean-pooling for the AdaLN-Zero
@@ -628,7 +628,7 @@ short training run — not the real Phase 8 baseline):**
 ```
 [ ] Train 3 short, small-scale MMDiT runs, identical except for which
     text-encoder layer feeds conditioning (e.g. layer index 8, 16, and
-    the final layer, for a checkpoint of aarambh-ai's given depth)
+    the final layer, for a checkpoint of aarambh-studio's given depth)
 [ ] Score each on CLIP-score (once Phase 23's harness exists, this is
     re-validated retroactively; in the meantime, a fixed small validation
     prompt set + Phase 4's contrastive encoder gives an interim score)
