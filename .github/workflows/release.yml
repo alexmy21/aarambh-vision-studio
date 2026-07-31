@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        # Additional platforms (macos-latest, windows-latest) can be added
+        # once cross-platform builds are validated — see CONTRIBUTING.md.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo build --workspace --release
+      - name: Package CLI binary
+        run: |
+          mkdir -p dist
+          cp target/release/aarambh-vision-studio dist/aarambh-vision-studio-${{ matrix.os }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aarambh-vision-studio-${{ matrix.os }}
+          path: dist/
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          # This is a source-first project — no model checkpoints are ever
+          # attached here, only CLI binaries. See README.md.
+          files: dist/**/*
+          generate_release_notes: true
+          body: |
+            See `CHANGELOG.md` for details on this release.
+
+            No model checkpoints are included — this project ships source
+            and training recipes only. See `ROADMAP_VISION_STUDIO_PART1.md`
+            / `PART2.md` for how to train your own checkpoints.

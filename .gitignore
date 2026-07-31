@@ -1,0 +1,43 @@
+# Rust build artifacts
+/target/
+**/target/
+
+# Training data & artifacts — never committed (per project's no-vendored-checkpoints policy)
+/data/
+/checkpoints/
+/datasets/
+*.safetensors
+*.ckpt
+*.pt
+*.onnx
+
+# Generated images / outputs from local testing
+/outputs/
+*.png
+*.jpg
+*.jpeg
+*.webp
+!docs/**/*.png
+!docs/**/*.jpg
+!docs/**/*.webp
+
+# Logs
+*.log
+/logs/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / local config
+.env
+.env.local
+
+# Kaggle / notebook artifacts
+*.ipynb_checkpoints/

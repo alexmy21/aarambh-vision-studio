@@ -1,0 +1,61 @@
+[workspace]
+members = [
+    "crates/aarambh-vision-core",
+    "crates/aarambh-vision-tokenizer",
+    "crates/aarambh-vision-textprep",
+    "crates/aarambh-vision-data",
+    "crates/aarambh-vision-understand",
+    "crates/aarambh-vision-nn",
+    "crates/aarambh-vision-kernel",
+    "crates/aarambh-vision-textencoder",
+    "crates/aarambh-vision-model",
+    "crates/aarambh-vision-weights",
+    "crates/aarambh-vision-train",
+    "crates/aarambh-vision-quant",
+    "crates/aarambh-vision-finetune",
+    "crates/aarambh-vision-align",
+    "crates/aarambh-vision-selflearn",
+    "crates/aarambh-vision-edit",
+    "crates/aarambh-vision-structure",
+    "crates/aarambh-vision-refprompt",
+    "crates/aarambh-vision-upscale",
+    "crates/aarambh-vision-safety",
+    "crates/aarambh-vision-eval",
+    "crates/aarambh-vision-control",
+    "crates/aarambh-vision-inference",
+    "crates/aarambh-vision-serve",
+    "aarambh-vision-studio",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/AarambhDevHub/aarambh-vision-studio"
+
+[workspace.dependencies]
+candle-core         = { version = "0.11" }
+candle-nn           = { version = "0.11" }
+candle-transformers = { version = "0.11" }
+image               = { version = "0.25", features = ["png", "jpeg", "bmp", "tiff"] }
+webp                = "0.3"
+fast_image_resize   = "5"
+imageproc           = "0.25"
+tokenizers          = "0.22"
+anyhow              = "1"
+thiserror           = "2"
+serde               = { version = "1", features = ["derive"] }
+serde_json          = "1"
+toml                = "0.9"
+tokio               = { version = "1", features = ["full"] }
+clap                = { version = "4", features = ["derive"] }
+tracing             = "0.1"
+tracing-subscriber  = "0.3"
+safetensors         = "0.7"
+rayon               = "1.7"
+cc                  = "1"
+which               = "6"
+criterion           = "0.8"
+sha2                = "0.10"
+axum                = "0.8"
