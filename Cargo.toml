@@ -24,6 +24,7 @@ members = [
     "crates/aarambh-vision-control",
     "crates/aarambh-vision-inference",
     "crates/aarambh-vision-serve",
+    "crates/aarambh-vision-sidecar",
     "aarambh-vision-studio",
 ]
 resolver = "2"

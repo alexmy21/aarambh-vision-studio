@@ -1,0 +1,20 @@
+[package]
+name = "aarambh-vision-sidecar"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "EWM state-machine side-car adapter for the aarambh-vision sampler loop (per-step S(t), D/R/N, ring, warnings, two-score eval)"
+
+[dependencies]
+aarambh-vision-core = { path = "../aarambh-vision-core" }
+candle-core = { workspace = true }
+
+# The EWM side-car core (host-agnostic: codebook probe, ring, basis frames,
+# two-score eval). Local path while the adapter is developed in this
+# workspace; for the PR, switch to the git dependency once the ewm crates
+# are pushed/published:
+#
+#   ewm-flux-host = { git = "https://github.com/alexmy21/ewm-state-machine.git", branch = "main" }
+#
+ewm-flux-host = { path = "/home/alexmy/SGS/SGS_lib/fractal_manifold_gen2/ewm-state-machine/crates/ewm-flux-host" }
