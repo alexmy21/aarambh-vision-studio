@@ -15,6 +15,6 @@ candle-core = { workspace = true }
 # workspace; for the PR, switch to the git dependency once the ewm crates
 # are pushed/published:
 #
-#   ewm-flux-host = { git = "https://github.com/alexmy21/ewm-state-machine.git", branch = "main" }
+ewm-flux-host = { git = "https://github.com/alexmy21/ewm-state-machine.git", branch = "main" }
 #
-ewm-flux-host = { path = "/home/alexmy/SGS/SGS_lib/fractal_manifold_gen2/ewm-state-machine/crates/ewm-flux-host" }
+# ewm-flux-host = { path = "/home/alexmy/SGS/SGS_lib/fractal_manifold_gen2/ewm-state-machine/crates/ewm-flux-host" }
