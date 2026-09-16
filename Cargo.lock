@@ -267,7 +267,7 @@ dependencies = [
 [[package]]
 name = "context-tree"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hex",
  "sha1",
@@ -476,7 +476,7 @@ checksum = "d817e038c30374a4bcb22f94d0a8a0e216958d4c3dcde369b1439fec4bdda6e6"
 [[package]]
 name = "ewm-app"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "context-tree",
  "ewm-boolring",
@@ -491,7 +491,7 @@ dependencies = [
 [[package]]
 name = "ewm-boolring"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hllset-core",
 ]
@@ -499,7 +499,7 @@ dependencies = [
 [[package]]
 name = "ewm-flux-host"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "ewm-app",
  "ewm-boolring",
@@ -512,7 +512,7 @@ dependencies = [
 [[package]]
 name = "ewm-git"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hllset-core",
  "hllset-lut",
@@ -762,7 +762,7 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 [[package]]
 name = "hllset-contracts"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hex",
  "murmur3",
@@ -772,7 +772,7 @@ dependencies = [
 [[package]]
 name = "hllset-core"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hllset-contracts",
  "roaring",
@@ -783,7 +783,7 @@ dependencies = [
 [[package]]
 name = "hllset-lut"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hllset-contracts",
  "hllset-core",
@@ -792,7 +792,7 @@ dependencies = [
 [[package]]
 name = "hllset-morphisms"
 version = "0.3.0"
-source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#afdb3a34840cf7b0474befd3078603ebed21b684"
+source = "git+https://github.com/alexmy21/ewm-state-machine.git?branch=main#43ead953e8deee8eb1dd883fca617a5b3eb6e952"
 dependencies = [
  "hllset-contracts",
  "hllset-core",
